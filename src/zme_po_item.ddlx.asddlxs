@@ -1,0 +1,60 @@
+@Metadata.layer: #CORE
+
+@UI:{
+  headerInfo :{
+    typeName : 'Item',
+    typeNamePlural: 'Items',
+    title :{
+       type: #STANDARD,
+       label: 'Item',
+       value: 'ItemNumber'
+    }
+  }
+}
+@Search.searchable: true
+annotate view zc_purchaseorder_item
+    with 
+{
+
+  @UI.facet: [{ 
+               id :'ItemInfo',
+               purpose :#STANDARD,
+               type: #IDENTIFICATION_REFERENCE,
+               label: 'Item Info',
+               position: 10
+              }
+  ]
+  
+  
+   @EndUserText.label: 'Item Number'
+  @UI.identification: [{position: 11 , importance: #HIGH, label : 'Item Number' }]
+  @UI.lineItem: [{position: 11 , importance: #HIGH, label : 'Item Number' }]
+  @UI.selectionField: [{ position: 11 }]
+    ItemNumber;
+    
+   @EndUserText.label: 'Material Number'
+  @UI.identification: [{position: 12 , importance: #HIGH, label : 'Material Number' }]
+  @UI.lineItem: [{position: 12 , importance: #HIGH, label : 'Material Number' }]
+  @Search.defaultSearchElement: true
+  @Search.fuzzinessThreshold: 0.5 
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'zi_purchaseorder_item', element: 'MaterialNumber' }}]
+    MaterialNumber;
+    
+    @EndUserText.label: 'Material Description'
+  @UI.identification: [{position: 13 , importance: #HIGH, label : 'Material Description' }]
+  @UI.lineItem: [{position: 13 , importance: #HIGH, label : 'Material Description' }]
+    MaterialDescription;
+    
+    @EndUserText.label: 'Unit Price'
+  @UI.identification: [{position: 14 , importance: #HIGH, label : 'Unit Price' }]
+  @UI.lineItem: [{position: 14 , importance: #HIGH, label : 'Unit Price' }]
+    UnitPrice;
+    
+   @EndUserText.label: 'Currency'
+  @UI.identification: [{position: 15 , importance: #HIGH, label : 'Currency' }]
+  @UI.lineItem: [{position: 15 , importance: #HIGH, label : 'Currency' }]  
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_CurrencyStdVH', element: 'Currency' }}]
+    Currency;
+    
+    
+}

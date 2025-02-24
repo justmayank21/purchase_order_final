@@ -1,0 +1,5 @@
+CLASS zbp_c_custom_entity DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zc_custom_entity.
+ENDCLASS.
+
+CLASS zbp_c_custom_entity IMPLEMENTATION.
+ENDCLASS.

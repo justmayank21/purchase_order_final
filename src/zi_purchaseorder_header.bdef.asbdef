@@ -1,0 +1,88 @@
+unmanaged implementation in class zbp_i_purchaseorder_header unique;
+//strict ( 2 );
+
+define behavior for zi_purchaseOrder_header alias header
+//late numbering
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  field ( readonly ) PurchaseOrderNum, Status;
+// side effects { field OrderCreationDate affects $self[ 1 ] ;
+  // Validation and determination is not possible in Unmanaged, it is possible only through Unmanaged draft.
+//determination validateDate on save { field OrderCreationDate; }
+
+  mapping for zpo_header_table
+    {
+      PurchaseOrderNum  = purchase_order_num;
+      VendorNum         = vendor_num;
+      VendorName        = vendor_name;
+      Status            = status;
+      OrderCreationDate = order_creation_date;
+      Description       = description;
+      CreatedBy         = created_by;
+    }
+
+  association _item { create; }
+  association _quan { create; }
+
+    action (features : instance) approve result [1] $self;
+    action (features : instance) reject result [1] $self;
+}
+
+define behavior for zi_purchaseOrder_item alias item
+//late numbering
+lock dependent by _header
+authorization dependent by _header
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) PurchaseOrderNum;
+  field ( readonly : update , mandatory : create  ) ItemNumber;
+
+  mapping for zpo_item_table
+  {
+  PurchaseOrderNum = purchase_order_num;
+  ItemNumber = item_number;
+  MaterialNumber = material_number;
+  MaterialDescription = material_description;
+  UnitPrice = unit_price;
+  Currency = currency;
+  }
+
+  association _header;
+}
+
+define behavior for zi_quantity_plant alias quantity
+//late numbering
+lock dependent by _header
+authorization dependent by _header
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) PurchaseOrderNum;  // ItemNumber;
+  field ( readonly : update ) ItemNumber, MaterialNumber;
+
+  mapping for zpo_quan_plant
+  {
+
+  PurchaseOrderNum = purchase_order_num;
+  ItemNumber = item_number;
+  MaterialNumber = material_number;
+  Unit = unit;
+  Quantity = quantity;
+  PlantNumber = plant_number;
+  PlantAddress = plant_address;
+  Comments = comments;
+
+
+  }
+
+
+  association _header;
+}

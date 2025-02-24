@@ -1,0 +1,7 @@
+@EndUserText.label: 'service def for purchase order'
+define service Zsd_purchase_order {
+  expose zc_purchaseorder_header;
+  expose zc_purchaseorder_item;
+  expose zc_quantity_plant;
+  expose zc_custom_entity;
+}

@@ -1,0 +1,116 @@
+@Metadata.layer: #CORE
+
+@UI:{
+  headerInfo :{
+    typeName : 'Purchase Order',
+    typeNamePlural: 'Purchase Orders',
+    title :{
+       type: #STANDARD,
+       label: 'Purchase Order',
+       value: 'PurchaseOrderNum'          
+    }
+//    description.value: 'Status',
+//    description.criticalityRepresentation: #WITH_ICON,
+//    description.criticality: 'OverallStatus'
+    
+    
+  }
+}
+@Search.searchable: true
+annotate view zc_purchaseorder_header with 
+{
+    @UI.facet: [{ 
+                 id :'Header',
+                 purpose :#STANDARD,
+                 type: #IDENTIFICATION_REFERENCE,
+                 label: 'General Information',
+                 position: 10
+                },
+    { 
+                 id :'Item',
+                 type: #LINEITEM_REFERENCE,
+                 label: 'Item Information',
+                 position: 20,
+                 targetElement: '_item'
+                },
+    { 
+                 id :'Quantity',
+                 type: #LINEITEM_REFERENCE,
+                 label: 'Quantity And Plant Information',
+                 position: 30,
+                 targetElement: '_quan'
+                }
+  ]
+  
+  @EndUserText.label: 'Purchase Order Number'
+  @UI.identification: [{position: 10 , importance: #HIGH, label : 'Purchase Order Number' },
+  { type: #FOR_ACTION, dataAction: 'approve', label: 'Approve' },
+  { type: #FOR_ACTION, dataAction: 'reject', label: 'Reject' }]
+  @UI.lineItem: [{position: 10 , importance: #HIGH, label : 'Purchase Order Number' },
+  { type: #FOR_ACTION, dataAction: 'approve' , label: 'Approve' },
+  { type: #FOR_ACTION, dataAction: 'reject', label: 'Reject' }]
+  @UI.selectionField: [{ position: 10 }]
+  @Search.defaultSearchElement: true
+  @Search.fuzzinessThreshold: 0.7
+  @Consumption.valueHelpDefinition: [{ entity : {name: 'zc_purchaseOrder_header', element: 'PurchaseOrderNum'  } }]
+    PurchaseOrderNum;
+    
+    @EndUserText.label: 'Vendor Number'
+  @UI.identification: [{position: 11 , importance: #HIGH, label : 'Vendor Number' }]
+  @UI.lineItem: [{position: 11 , importance: #HIGH, label : 'Vendor Number' }]
+   @UI.selectionField: [{ position: 20 }]
+    @Search.defaultSearchElement: true
+  @Search.fuzzinessThreshold: 0.7
+  @Consumption.valueHelpDefinition: [{ entity : {name: 'zc_purchaseOrder_header', element: 'VendorNum'  } }]
+  @UI.dataPoint: { qualifier: 'VendorNum', title: 'Vendor Num' }
+    VendorNum;
+    
+   @EndUserText.label: 'Vendor Name'
+  @UI.identification: [{position: 12 , importance: #HIGH, label : 'Vendor Name' }]
+  @UI.lineItem: [{position: 12 , importance: #HIGH, label : 'Vendor Name' }] 
+    VendorName;
+    
+    @EndUserText.label: 'Order Status'
+  @UI.identification: [{position: 13 , importance: #HIGH, label : 'Order Status' }]
+  @UI.lineItem: [{position: 13 , importance: #HIGH, label : 'Status',criticality: 'OverallStatus' }]
+  @UI.selectionField: [{ position: 13 }]
+//   @Consumption.valueHelpDefinition: [{ entity: { name: 'zi_purchaseorder_header', element: 'Status' }}]
+@Consumption.valueHelpDefinition: [{ entity: { name: 'zcds_status_15592', element: 'Value' },
+  distinctValues: true, 
+  additionalBinding: [{ localElement: 'Status',
+                        element: 'Description',
+                        usage: #FILTER_AND_RESULT }] }]
+ @UI.dataPoint: { qualifier: 'StatusData', title: 'Status', criticality: 'OverallStatus' }
+    Status;
+    
+    @EndUserText.label: 'Order Creation Date'
+  @UI.identification: [{position: 14 , importance: #HIGH, label : 'Order Creation Date' }]
+  @UI.lineItem: [{position: 14 , importance: #HIGH, label : 'Order Creation Date' }]
+  
+    OrderCreationDate;
+    
+ @EndUserText.label: 'Description'
+  @UI.identification: [{position: 15 , importance: #HIGH, label : 'Description' }]
+  @UI.lineItem: [{position: 15 , importance: #HIGH, label : 'Description' }]   
+    Description;
+    
+    @EndUserText.label: 'Created By'
+  @UI.identification: [{position: 16 , importance: #HIGH, label : 'Created By' }]
+  @UI.lineItem: [{position: 16 , importance: #HIGH, label : 'Created By' }]
+    CreatedBy;
+ 
+// @EndUserText.label: 'Net Amount'
+//  @UI.identification: [{position: 16 , importance: #HIGH, label : 'Net Amount' }]
+//  @UI.lineItem: [{position: 16 , importance: #HIGH, label : 'Net Amount' }]
+//  @UI.dataPoint: { qualifier: 'NetAmt', title: 'Net Amount' }   
+//    NetAmt;
+
+    
+    
+ 
+   
+   
+    
+    
+    
+}
